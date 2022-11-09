@@ -55,12 +55,12 @@ class NotesEntry extends StatelessWidget {
   }
 
   ListTile _buildColorListTile(BuildContext context) {
-    const colors = const ['red', 'green', 'blue', 'yellow', 'grey', 'purple'];
+    const colors = ['red', 'green', 'blue', 'yellow', 'grey', 'purple'];
     return ListTile(
       leading: Icon(Icons.color_lens),
       title: Row(
         children: colors
-            .expand((c) => [_buildColorBox(context, c), Spacer()])
+            .expand((c) => [_buildColorBox(context, c), const Spacer()])
             .toList()
           ..removeLast(),
       ),
@@ -107,6 +107,7 @@ class NotesEntry extends StatelessWidget {
                         : Theme.of(context).canvasColor)),
       ),
       onTap: () {
+        print(color);
         notesModel.noteBeingEdited?.color = color;
         notesModel.setColor(color);
       },
@@ -143,7 +144,6 @@ class NotesEntry extends StatelessWidget {
     }
     if (!model.noteList.contains(model.noteBeingEdited)) {
       model.noteList.add(model.noteBeingEdited!);
-      print('note has been added!');
     }
     model.setStackIndex(0);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

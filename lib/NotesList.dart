@@ -54,7 +54,7 @@ class NotesList extends StatelessWidget {
             Note note = model.noteList[index];
             Color color = _toColor(note.color);
             return Container(
-              height: 200,
+              //height: 200,
               padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
               child: Card(
                 elevation: 8,
@@ -65,7 +65,7 @@ class NotesList extends StatelessWidget {
                   onTap: () {
                     model.noteBeingEdited = note;
                     model.setColor(model.noteBeingEdited!.color);
-                    model.setStackIndex(1);
+                    model.setStackIndex(0);
                   },
                 ),
               ),
