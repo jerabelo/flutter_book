@@ -5,7 +5,7 @@ import 'Notes.dart';
 import 'package:flutter/material.dart';
 
 class NotesList extends StatelessWidget {
-  Color _toColor(String? NoteColor) {
+  Color _toColor(String NoteColor) {
     Color color = Colors.red;
     switch (NoteColor) {
       case 'red':
@@ -55,17 +55,17 @@ class NotesList extends StatelessWidget {
             Color color = _toColor(note.color);
             return Container(
               //height: 200,
-              padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
               child: Card(
                 elevation: 8,
                 color: color,
                 child: ListTile(
-                  title: Text(note.title!),
-                  subtitle: Text(note.content!),
+                  title: Text(note.title),
+                  subtitle: Text(note.content),
                   onTap: () {
                     model.noteBeingEdited = note;
-                    model.setColor(model.noteBeingEdited!.color);
-                    model.setStackIndex(0);
+                    model.setColor(model.noteBeingEdited.color);
+                    model.setStackIndex(1);
                   },
                 ),
               ),

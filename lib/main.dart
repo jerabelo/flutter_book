@@ -13,8 +13,8 @@ void main() {
 class ConfigModel extends Model {
   Color _color = Colors.red;
   Color get color => _color;
-  void setColor(Color? color) {
-    _color = color!;
+  void setColor(Color color) {
+    _color = color;
     notifyListeners();
   }
 }
@@ -65,7 +65,7 @@ class ScopedModelUpdater extends StatelessWidget {
                               Container(width: 100, height: 20, color: color),
                         ))
                     .toList(),
-                onChanged: (Color? color) => config.setColor(color)));
+                onChanged: (Color color) => config.setColor(color)));
   }
 }
 

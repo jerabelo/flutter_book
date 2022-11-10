@@ -27,7 +27,7 @@ class NotesEntry extends StatelessWidget {
         title: TextFormField(
           decoration: InputDecoration(hintText: 'Title'),
           controller: _titleEditingController,
-          validator: (String? value) {
+          validator: (String value) {
             if (value?.length == 0) {
               return 'Please enter a title';
             }
@@ -44,7 +44,7 @@ class NotesEntry extends StatelessWidget {
         maxLines: 8,
         decoration: InputDecoration(hintText: 'Content'),
         controller: _contentEditingController,
-        validator: (String? value) {
+        validator: (String value) {
           if (value?.length == 0) {
             return 'Please enter content';
           }
@@ -68,7 +68,7 @@ class NotesEntry extends StatelessWidget {
   }
 
   GestureDetector _buildColorBox(BuildContext context, String color) {
-    Color _toColor(String? NoteColor) {
+    Color _toColor(String NoteColor) {
       Color color = Colors.red;
       switch (NoteColor) {
         case 'red':
@@ -107,7 +107,6 @@ class NotesEntry extends StatelessWidget {
                         : Theme.of(context).canvasColor)),
       ),
       onTap: () {
-        print(color);
         notesModel.noteBeingEdited?.color = color;
         notesModel.setColor(color);
       },
@@ -139,12 +138,14 @@ class NotesEntry extends StatelessWidget {
   }
 
   void _save(BuildContext context, NotesModel model) {
-    if (_formKey.currentState!.validate()) {
+    if (!_formKey.currentState.validate()) {
       return;
     }
+
     if (!model.noteList.contains(model.noteBeingEdited)) {
-      model.noteList.add(model.noteBeingEdited!);
+      model.noteList.add(model.noteBeingEdited);
     }
+
     model.setStackIndex(0);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       backgroundColor: Colors.green,
@@ -157,13 +158,12 @@ class NotesEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<NotesModel>(
       builder: (BuildContext context, Widget child, NotesModel model) {
-        _titleEditingController.text = model.noteBeingEdited?.title as String;
-        _contentEditingController.text =
-            model.noteBeingEdited?.content as String;
+        _titleEditingController.text = model.noteBeingEdited?.title;
+        _contentEditingController.text = model.noteBeingEdited?.content;
         return Scaffold(
           resizeToAvoidBottomInset: false,
           bottomNavigationBar: Padding(
-            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             child: _buildControlButtons(context, model),
           ),
           body: Column(
