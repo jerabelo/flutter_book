@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:scoped_model/scoped_model.dart';
-import 'Notes.dart';
-import 'NotesEntry.dart';
-import 'NotesList.dart';
-import 'NotesModel.dart';
+import 'Notes/Notes.dart';
+import 'Notes/NotesEntry.dart';
+import 'Notes/NotesList.dart';
+import 'Notes/NotesModel.dart';
 
 void main() {
   runApp(FlutterBook());

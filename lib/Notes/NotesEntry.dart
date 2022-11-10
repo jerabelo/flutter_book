@@ -109,6 +109,7 @@ class NotesEntry extends StatelessWidget {
       onTap: () {
         notesModel.noteBeingEdited?.color = color;
         notesModel.setColor(color);
+        print(notesModel.color);
       },
     );
   }

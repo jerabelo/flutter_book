@@ -1,5 +1,5 @@
-import 'package:flutter_book/NotesModel.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'NotesModel.dart';
 import 'NotesEntry.dart';
 import 'Notes.dart';
 import 'package:flutter/material.dart';

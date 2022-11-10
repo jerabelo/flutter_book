@@ -2,7 +2,6 @@ import 'package:scoped_model/scoped_model.dart';
 import 'Notes.dart';
 import 'NotesEntry.dart';
 import 'NotesList.dart';
-import 'main.dart';
 
 NotesModel notesModel = NotesModel();
 
