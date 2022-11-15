@@ -3,8 +3,13 @@ import 'package:scoped_model/scoped_model.dart';
 import 'NotesEntry.dart';
 import 'NotesModel.dart' show NotesModel, notesModel;
 import 'NotesList.dart';
+import 'NotesDBWorker.dart';
 
 class Notes extends StatelessWidget {
+  Notes() {
+    notesModel.loadData(NotesDBWorker.db);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScopedModel<NotesModel>(

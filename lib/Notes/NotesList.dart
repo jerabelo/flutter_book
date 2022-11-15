@@ -3,6 +3,7 @@ import 'NotesModel.dart';
 import 'NotesEntry.dart';
 import 'Notes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_book/BaseModel.dart';
 
 class NotesList extends StatelessWidget {
   Color _toColor(String NoteColor) {
@@ -42,16 +43,16 @@ class NotesList extends StatelessWidget {
             color: Colors.black,
           ),
           onPressed: () {
-            model.noteBeingEdited = Note();
+            model.entryBeingEdited = Note();
             model.setColor(null);
             model.setStackIndex(1);
           },
         ),
         body: ListView.builder(
           scrollDirection: Axis.vertical,
-          itemCount: model.noteList.length,
+          itemCount: model.entryList.length,
           itemBuilder: (BuildContext context, int index) {
-            Note note = model.noteList[index];
+            Note note = model.entryList[index];
             Color color = _toColor(note.color);
             return Container(
               //height: 200,
@@ -63,8 +64,8 @@ class NotesList extends StatelessWidget {
                   title: Text(note.title),
                   subtitle: Text(note.content),
                   onTap: () {
-                    model.noteBeingEdited = note;
-                    model.setColor(model.noteBeingEdited.color);
+                    model.entryBeingEdited = note;
+                    model.setColor(model.entryBeingEdited.color);
                     model.setStackIndex(1);
                   },
                 ),

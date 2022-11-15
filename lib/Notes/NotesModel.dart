@@ -1,4 +1,5 @@
 import 'package:scoped_model/scoped_model.dart';
+import '../BaseModel.dart';
 import 'Notes.dart';
 import 'NotesEntry.dart';
 import 'NotesList.dart';
@@ -6,6 +7,7 @@ import 'NotesList.dart';
 NotesModel notesModel = NotesModel();
 
 class Note {
+  int id;
   String title;
   String content;
   String color;
@@ -13,16 +15,8 @@ class Note {
   String toString() => "{title=$title, content=$content, color=$color }";
 }
 
-class NotesModel extends Model {
-  int stackIndex = 0;
-  List<Note> noteList = [];
-  Note noteBeingEdited;
+class NotesModel extends BaseModel<Note> {
   String color;
-
-  void setStackIndex(int stackIndex) {
-    this.stackIndex = stackIndex;
-    notifyListeners();
-  }
 
   void setColor(String color) {
     this.color = color;

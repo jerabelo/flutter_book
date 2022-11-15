@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:scoped_model/scoped_model.dart';
@@ -5,8 +6,18 @@ import 'Notes/Notes.dart';
 import 'Notes/NotesEntry.dart';
 import 'Notes/NotesList.dart';
 import 'Notes/NotesModel.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:flutter/widgets.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-void main() {
+void main() async {
+  // Trying to get database working
+  // var databasesPath = await getDatabasesPath();
+  // String path = join(databasesPath, 'demo.db');
+
+  //print(path);
   runApp(FlutterBook());
 }
 

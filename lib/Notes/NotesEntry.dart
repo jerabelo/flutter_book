@@ -4,6 +4,8 @@ import 'NotesEntry.dart';
 import 'Notes.dart';
 import 'NotesModel.dart' show NotesModel, notesModel;
 import 'NotesList.dart';
+import 'NotesDBWorker.dart';
+import 'package:sqflite/sqflite.dart';
 
 class NotesEntry extends StatelessWidget {
   final TextEditingController _titleEditingController = TextEditingController();
@@ -14,10 +16,10 @@ class NotesEntry extends StatelessWidget {
 
   NotesEntry() {
     _titleEditingController.addListener(() {
-      notesModel.noteBeingEdited?.title = _titleEditingController.text;
+      notesModel.entryBeingEdited?.title = _titleEditingController.text;
     });
     _contentEditingController.addListener(() {
-      notesModel.noteBeingEdited?.content = _contentEditingController.text;
+      notesModel.entryBeingEdited?.content = _contentEditingController.text;
     });
   }
 
@@ -107,7 +109,7 @@ class NotesEntry extends StatelessWidget {
                         : Theme.of(context).canvasColor)),
       ),
       onTap: () {
-        notesModel.noteBeingEdited?.color = color;
+        notesModel.entryBeingEdited?.color = color;
         notesModel.setColor(color);
         print(notesModel.color);
       },
@@ -138,15 +140,21 @@ class NotesEntry extends StatelessWidget {
     );
   }
 
-  void _save(BuildContext context, NotesModel model) {
+  void _save(BuildContext context, NotesModel model) async {
     if (!_formKey.currentState.validate()) {
       return;
     }
 
-    if (!model.noteList.contains(model.noteBeingEdited)) {
-      model.noteList.add(model.noteBeingEdited);
+    if (!model.entryList.contains(model.entryBeingEdited)) {
+      model.entryList.add(model.entryBeingEdited);
     }
 
+    if (model.entryBeingEdited.id == null) {
+      await NotesDBWorker.db.create(notesModel.entryBeingEdited);
+    } else {
+      await NotesDBWorker.db.update(notesModel.entryBeingEdited);
+    }
+    notesModel.loadData(NotesDBWorker.db);
     model.setStackIndex(0);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       backgroundColor: Colors.green,
@@ -159,8 +167,8 @@ class NotesEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<NotesModel>(
       builder: (BuildContext context, Widget child, NotesModel model) {
-        _titleEditingController.text = model.noteBeingEdited?.title;
-        _contentEditingController.text = model.noteBeingEdited?.content;
+        _titleEditingController.text = model.entryBeingEdited?.title;
+        _contentEditingController.text = model.entryBeingEdited?.content;
         return Scaffold(
           resizeToAvoidBottomInset: false,
           bottomNavigationBar: Padding(
