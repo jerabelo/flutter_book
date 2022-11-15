@@ -4,6 +4,7 @@ import 'NotesEntry.dart';
 import 'Notes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_book/BaseModel.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class NotesList extends StatelessWidget {
   Color _toColor(String NoteColor) {

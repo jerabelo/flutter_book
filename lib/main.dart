@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_book/Tasks/TasksDBWorker.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:scoped_model/scoped_model.dart';
 import 'Notes/Notes.dart';
@@ -10,16 +11,28 @@ import 'package:sqflite/sqflite.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite/sqflite.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  //Open notes.db
+  Database db = await openDatabase('notes.db');
+  //query to insert info into notes table from tasksDBWorker.dart
+  int id = await db.rawInsert(
+      "INSERT INTO notes (title, content, color) VALUES (?, ?, ?)",
+      ["Learn sqflite", "Write notes database", "green"]);
+  await db.delete("notes", where: "_id = ?", whereArgs: [id]);
+
   // Trying to get database working
-  // var databasesPath = await getDatabasesPath();
+  //var databasesPath = await getDatabasesPath();
+  //print(databasesPath);
   // String path = join(databasesPath, 'demo.db');
 
   //print(path);
   runApp(FlutterBook());
 }
+
+mixin TestWidgetsFlutterBinding {}
 
 class ConfigModel extends Model {
   Color _color = Colors.red;
