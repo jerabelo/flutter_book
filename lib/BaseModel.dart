@@ -19,6 +19,7 @@ class BaseModel<T> extends Model {
 
 mixin DateSelection on Model {
   String chosenDate;
+
   void setChosenDate(String date) {
     this.chosenDate = date;
     notifyListeners();
