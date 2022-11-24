@@ -39,24 +39,23 @@ class NotesList extends StatelessWidget {
       return Scaffold(
         resizeToAvoidBottomInset: false,
         floatingActionButton: FloatingActionButton(
-          child: Icon(
+          child: const Icon(
             Icons.add,
             color: Colors.black,
           ),
           onPressed: () {
-            model.entryBeingEdited = Note();
+            model.entityBeingEdited = Note();
             model.setColor(null);
             model.setStackIndex(1);
           },
         ),
         body: ListView.builder(
           scrollDirection: Axis.vertical,
-          itemCount: model.entryList.length,
+          itemCount: model.entityList.length,
           itemBuilder: (BuildContext context, int index) {
-            Note note = model.entryList[index];
+            Note note = model.entityList[index];
             Color color = _toColor(note.color);
             return Container(
-              //height: 200,
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
               child: Card(
                 elevation: 8,
@@ -65,8 +64,8 @@ class NotesList extends StatelessWidget {
                   title: Text(note.title),
                   subtitle: Text(note.content),
                   onTap: () {
-                    model.entryBeingEdited = note;
-                    model.setColor(model.entryBeingEdited.color);
+                    model.entityBeingEdited = note;
+                    model.setColor(model.entityBeingEdited.color);
                     model.setStackIndex(1);
                   },
                 ),

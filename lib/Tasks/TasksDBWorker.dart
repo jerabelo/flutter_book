@@ -39,9 +39,9 @@ class _SqfliteTasksDBWorker implements TasksDBWorker {
     return await openDatabase(DB_NAME, version: 2, onOpen: (db) {},
         onCreate: (Database db, int version) async {
       await db.execute("CREATE TABLE IF NOT EXISTS $TBL_NAME ("
-          "$KEY_ID INTEGER PRIMARY KEY,"
-          "$KEY_DESCRIPTION TEXT,"
-          "$KEY_DUEDATE TEXT,"
+          "$KEY_ID INTEGER PRIMARY KEY, "
+          "$KEY_DESCRIPTION TEXT, "
+          "$KEY_DUEDATE TEXT, "
           "$KEY_COMPLETED INTEGER"
           ")");
     });

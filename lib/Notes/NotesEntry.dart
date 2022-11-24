@@ -16,10 +16,10 @@ class NotesEntry extends StatelessWidget {
 
   NotesEntry() {
     _titleEditingController.addListener(() {
-      notesModel.entryBeingEdited?.title = _titleEditingController.text;
+      notesModel.entityBeingEdited?.title = _titleEditingController.text;
     });
     _contentEditingController.addListener(() {
-      notesModel.entryBeingEdited?.content = _contentEditingController.text;
+      notesModel.entityBeingEdited?.content = _contentEditingController.text;
     });
   }
 
@@ -109,7 +109,7 @@ class NotesEntry extends StatelessWidget {
                         : Theme.of(context).canvasColor)),
       ),
       onTap: () {
-        notesModel.entryBeingEdited?.color = color;
+        notesModel.entityBeingEdited?.color = color;
         notesModel.setColor(color);
         print(notesModel.color);
       },
@@ -145,14 +145,14 @@ class NotesEntry extends StatelessWidget {
       return;
     }
 
-    if (!model.entryList.contains(model.entryBeingEdited)) {
-      model.entryList.add(model.entryBeingEdited);
+    if (!model.entityList.contains(model.entityList)) {
+      model.entityList.add(model.entityBeingEdited);
     }
 
-    if (model.entryBeingEdited.id == null) {
-      await NotesDBWorker.db.create(notesModel.entryBeingEdited);
+    if (model.entityBeingEdited.id == null) {
+      await NotesDBWorker.db.create(notesModel.entityBeingEdited);
     } else {
-      await NotesDBWorker.db.update(notesModel.entryBeingEdited);
+      await NotesDBWorker.db.update(notesModel.entityBeingEdited);
     }
     notesModel.loadData(NotesDBWorker.db);
     model.setStackIndex(0);
@@ -167,8 +167,8 @@ class NotesEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<NotesModel>(
       builder: (BuildContext context, Widget child, NotesModel model) {
-        _titleEditingController.text = model.entryBeingEdited?.title;
-        _contentEditingController.text = model.entryBeingEdited?.content;
+        _titleEditingController.text = model.entityBeingEdited?.title;
+        _contentEditingController.text = model.entityBeingEdited?.content;
         return Scaffold(
           resizeToAvoidBottomInset: false,
           bottomNavigationBar: Padding(
@@ -180,13 +180,14 @@ class NotesEntry extends StatelessWidget {
               Form(
                 key: _formKey,
                 child: ListView(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    children: [
-                      _buildTitleListTile(),
-                      _buildContentListTile(),
-                      _buildColorListTile(context)
-                    ]),
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  children: [
+                    _buildTitleListTile(),
+                    _buildContentListTile(),
+                    _buildColorListTile(context)
+                  ],
+                ),
               ),
             ],
           ),

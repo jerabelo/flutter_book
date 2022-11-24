@@ -9,7 +9,6 @@ class Notes extends StatelessWidget {
   Notes() {
     notesModel.loadData(NotesDBWorker.db);
   }
-
   @override
   Widget build(BuildContext context) {
     return ScopedModel<NotesModel>(

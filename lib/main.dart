@@ -1,27 +1,39 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_book/Tasks/TasksDBWorker.dart';
+import 'package:flutter_book/contacts/Contacts.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:scoped_model/scoped_model.dart';
 import 'Notes/Notes.dart';
-import 'Notes/NotesEntry.dart';
-import 'Notes/NotesList.dart';
-import 'Notes/NotesModel.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:flutter/widgets.dart';
-import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:path_provider/path_provider.dart';
+import 'contacts/Avatar.dart';
+import 'contacts/ContactsEntry.dart';
+import 'contacts/ContactsDBWorker.dart';
+import 'contacts/ContactsModel.dart';
+import 'contacts/ContactsList.dart';
+import "utils.dart" as utils;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  startMeUp() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    Directory docsDir = await getApplicationDocumentsDirectory();
+    utils.docsDir = docsDir;
+    Avatar.docsDir = await getApplicationDocumentsDirectory();
+    runApp(FlutterBook());
+  }
+
+  startMeUp();
+  //adding the contacts code
   //Open notes.db
-  Database db = await openDatabase('notes.db');
+  //Database db = await openDatabase('notes.db');
   //query to insert info into notes table from tasksDBWorker.dart
-  int id = await db.rawInsert(
-      "INSERT INTO notes (title, content, color) VALUES (?, ?, ?)",
-      ["Learn sqflite", "Write notes database", "green"]);
-  await db.delete("notes", where: "_id = ?", whereArgs: [id]);
+  //int id = await db.rawInsert(
+  //"INSERT INTO notes (title, content, color) VALUES (?, ?, ?)",
+  //["Learn sqflite", "Write notes database", "green"]);
+  //await db.delete("notes", where: "_id = ?", whereArgs: [id]);
 
   // Trying to get database working
   //var databasesPath = await getDatabasesPath();
@@ -29,7 +41,6 @@ void main() async {
   // String path = join(databasesPath, 'demo.db');
 
   //print(path);
-  runApp(FlutterBook());
 }
 
 mixin TestWidgetsFlutterBinding {}
@@ -136,11 +147,13 @@ class FlutterBook extends StatelessWidget {
                   ),
                 ),
                 //TODO MAKE LIST THE PARENT NOT THE CHILD
-                body: ScopedModel<NotesModel>(
-                  model: NotesModel(),
-                  child: Column(
-                    children: <Widget>[Container(height: 625, child: Notes())],
-                  ),
-                ))));
+                body: TabBarView(
+                    //model: NotesModel(),
+                    children: [
+                      _Dummy('Something else'),
+                      Contacts(),
+                      Notes(),
+                      _Dummy('Tasks')
+                    ]))));
   }
 }
