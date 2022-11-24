@@ -84,6 +84,7 @@ class ContactList extends StatelessWidget with Avatar {
                       Slidable(
                         actionPane: SlidableScrollActionPane(),
                         actionExtentRatio: .25,
+                        // ignore: sort_child_properties_last
                         child: ListTile(
                           leading: CircleAvatar(
                             backgroundColor: Colors.indigoAccent,
@@ -93,10 +94,7 @@ class ContactList extends StatelessWidget with Avatar {
                             child: avatarFileExists
                                 ? null
                                 : Text(
-                                    //contact.name.substring(0, 1).toUpperCase(),
-                                    contact.name = 'i cant change this'
-                                        .substring(0, 1)
-                                        .toUpperCase(),
+                                    contact.name.substring(0, 1).toUpperCase(),
                                   ),
                           ),
                           title: Text("${contact.name}"),
