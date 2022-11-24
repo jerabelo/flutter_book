@@ -5,7 +5,6 @@ import 'TasksList.dart';
 import 'TasksModel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-
 class Tasks extends StatelessWidget {
   Tasks() {
     tasksModel.loadData(TasksDBWorker.db);

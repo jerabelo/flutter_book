@@ -17,5 +17,4 @@ class Task {
   }
 }
 
-class TasksModel extends BaseModel<Task> with DateSelection {
-}
+class TasksModel extends BaseModel<Task> with DateSelection {}

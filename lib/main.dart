@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_book/Tasks/Tasks.dart';
 import 'package:flutter_book/Tasks/TasksDBWorker.dart';
 import 'package:flutter_book/contacts/Contacts.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -153,7 +154,7 @@ class FlutterBook extends StatelessWidget {
                       _Dummy('Something else'),
                       Contacts(),
                       Notes(),
-                      _Dummy('Tasks')
+                      Tasks(),
                     ]))));
   }
 }

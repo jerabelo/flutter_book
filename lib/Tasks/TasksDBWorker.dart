@@ -36,7 +36,7 @@ class _SqfliteTasksDBWorker implements TasksDBWorker {
 
   Future<Database> _init() async {
     print("Task DB WORKING");
-    return await openDatabase(DB_NAME, version: 2, onOpen: (db) {},
+    return await openDatabase(DB_NAME, version: 3, onOpen: (db) {},
         onCreate: (Database db, int version) async {
       await db.execute("CREATE TABLE IF NOT EXISTS $TBL_NAME ("
           "$KEY_ID INTEGER PRIMARY KEY, "
@@ -49,13 +49,14 @@ class _SqfliteTasksDBWorker implements TasksDBWorker {
 
   @override
   Future<int> create(Task task) async {
-    print('task being created');
+    print('Note being created');
+    int completed = task.completed ? 1 : 0;
+    print(completed);
     Database db = await database;
     int id = await db.rawInsert(
         "INSERT INTO $TBL_NAME ($KEY_DESCRIPTION, $KEY_DUEDATE, $KEY_COMPLETED) "
         "VALUES (?, ?, ?)",
-        [task.description, task.dueDate, task.completed ? 1 : 0]);
-    print(id);
+        [task.description, task.dueDate, completed]);
     return id;
   }
 

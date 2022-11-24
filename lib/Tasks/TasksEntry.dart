@@ -16,7 +16,7 @@ class TasksEntry extends StatelessWidget {
 
   TasksEntry() {
     _descriptionEditingController.addListener(() {
-      tasksModel.entryBeingEdited?.description =
+      tasksModel.entityBeingEdited?.description =
           _descriptionEditingController.text;
     });
   }
@@ -37,9 +37,9 @@ class TasksEntry extends StatelessWidget {
   }
 
   String _dueDate() {
-    if (tasksModel.entryBeingEdited != null &&
-        tasksModel.entryBeingEdited.hasDueDate()) {
-      return tasksModel.entryBeingEdited.dueDate;
+    if (tasksModel.entityBeingEdited != null &&
+        tasksModel.entityBeingEdited.hasDueDate()) {
+      return tasksModel.entityBeingEdited.dueDate;
     }
     return '';
   }
@@ -54,9 +54,9 @@ class TasksEntry extends StatelessWidget {
         color: Colors.blue,
         onPressed: () async {
           String chosenDate = await selectDate(
-              context, tasksModel, tasksModel.entryBeingEdited.dueDate);
+              context, tasksModel, tasksModel.entityBeingEdited.dueDate);
           if (chosenDate != null) {
-            tasksModel.entryBeingEdited.dueDate = chosenDate;
+            tasksModel.entityBeingEdited.dueDate = chosenDate;
           }
         },
       ),
@@ -92,14 +92,14 @@ class TasksEntry extends StatelessWidget {
       return;
     }
 
-    if (!model.entryList.contains(model.entryBeingEdited)) {
-      model.entryList.add(model.entryBeingEdited);
+    if (!model.entityList.contains(model.entityBeingEdited)) {
+      model.entityList.add(model.entityBeingEdited);
     }
 
-    if (model.entryBeingEdited.id == null) {
-      await TasksDBWorker.db.create(tasksModel.entryBeingEdited);
+    if (model.entityBeingEdited.id == null) {
+      await TasksDBWorker.db.create(tasksModel.entityBeingEdited);
     } else {
-      await TasksDBWorker.db.update(tasksModel.entryBeingEdited);
+      await TasksDBWorker.db.update(tasksModel.entityBeingEdited);
     }
     tasksModel.loadData(TasksDBWorker.db);
     model.setStackIndex(0);
@@ -115,7 +115,7 @@ class TasksEntry extends StatelessWidget {
     return ScopedModelDescendant<TasksModel>(
       builder: (BuildContext context, Widget child, TasksModel model) {
         _descriptionEditingController.text =
-            model.entryBeingEdited?.description;
+            model.entityBeingEdited?.description;
         return Scaffold(
           resizeToAvoidBottomInset: false,
           bottomNavigationBar: Padding(

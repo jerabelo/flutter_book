@@ -21,15 +21,15 @@ class TasksList extends StatelessWidget {
               color: Colors.black,
             ),
             onPressed: () {
-              model.entryBeingEdited = Task();
+              model.entityBeingEdited = Task();
               model.setStackIndex(1);
             },
           ),
           body: ListView.builder(
               // a ScopedModel wrapping a Scaffold
-              itemCount: tasksModel.entryList.length,
+              itemCount: tasksModel.entityList.length,
               itemBuilder: (BuildContext context, int index) {
-                Task task = tasksModel.entryList[index];
+                Task task = tasksModel.entityList[index];
                 return Container(
                     child: ListTile(
                         leading: Checkbox(
