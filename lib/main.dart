@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_book/Tasks/Tasks.dart';
 import 'package:flutter_book/Tasks/TasksDBWorker.dart';
 import 'package:flutter_book/contacts/Contacts.dart';
+import 'Links/Links.dart';
+import 'package:url_launcher/url_launcher.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:scoped_model/scoped_model.dart';
 import 'Notes/Notes.dart';
@@ -121,40 +123,46 @@ class FlutterBook extends StatelessWidget {
     const {'icon': Icons.contacts, 'name': 'Contacts'},
     const {'icon': Icons.note, 'name': 'Notes'},
     const {'icon': Icons.assignment_turned_in, 'name': 'Tasks'},
+    const {'icon': Icons.web_rounded, 'name': 'Links'},
   ];
 
   @override
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'FlutterBook',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+      debugShowCheckedModeBanner: false,
+      title: 'FlutterBook',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: DefaultTabController(
+        length: _TABS.length,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            title: Center(child: Text('FlutterBook')),
+            bottom: TabBar(
+              tabs: _TABS
+                  .map((tab) => Tab(
+                        icon: Icon(tab['icon'] as IconData),
+                        text: tab['name'].toString(),
+                      ))
+                  .toList(),
+            ),
+          ),
+          //TODO MAKE LIST THE PARENT NOT THE CHILD
+          body: TabBarView(
+            //model: NotesModel(),
+            children: [
+              _Dummy('Something else'),
+              Contacts(),
+              Notes(),
+              Tasks(),
+              Links(),
+            ],
+          ),
         ),
-        home: DefaultTabController(
-            length: _TABS.length,
-            child: Scaffold(
-                resizeToAvoidBottomInset: false,
-                appBar: AppBar(
-                  title: Center(child: Text('FlutterBook')),
-                  bottom: TabBar(
-                    tabs: _TABS
-                        .map((tab) => Tab(
-                              icon: Icon(tab['icon'] as IconData),
-                              text: tab['name'].toString(),
-                            ))
-                        .toList(),
-                  ),
-                ),
-                //TODO MAKE LIST THE PARENT NOT THE CHILD
-                body: TabBarView(
-                    //model: NotesModel(),
-                    children: [
-                      _Dummy('Something else'),
-                      Contacts(),
-                      Notes(),
-                      Tasks(),
-                    ]))));
+      ),
+    );
   }
 }

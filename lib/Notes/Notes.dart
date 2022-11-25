@@ -12,13 +12,15 @@ class Notes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScopedModel<NotesModel>(
-        model: notesModel,
-        child: ScopedModelDescendant<NotesModel>(
-            builder: (BuildContext context, Widget child, NotesModel model) {
+      model: notesModel,
+      child: ScopedModelDescendant<NotesModel>(
+        builder: (BuildContext context, Widget child, NotesModel model) {
           return IndexedStack(
             index: model.stackIndex,
             children: <Widget>[NotesList(), NotesEntry()],
           );
-        }));
+        },
+      ),
+    );
   }
 }
