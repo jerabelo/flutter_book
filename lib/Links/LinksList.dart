@@ -57,12 +57,29 @@ class LinksList extends StatelessWidget {
               Link link = model.entityList[index];
               Color color = _toColor(link.color);
               return Container(
+                height: 100,
                 padding: const EdgeInsets.all(10.0),
                 child: Card(
+                  shape: const RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: Colors.black,
+                    ),
+                  ),
+                  semanticContainer: true,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
                   elevation: 20,
+                  shadowColor: Colors.black,
                   color: color,
                   child: ListTile(
-                    title: Text(link.title),
+                    leading: Icon(
+                      Icons.star_border_rounded,
+                      size: 50,
+                    ),
+                    title: Text(
+                      link.title,
+                      textScaleFactor: 1.5,
+                      style: const TextStyle(fontStyle: FontStyle.normal),
+                    ),
                     subtitle: Text(link.content),
                     onTap: () {
                       model.entityBeingEdited = link;

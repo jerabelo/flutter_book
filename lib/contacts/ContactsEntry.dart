@@ -101,7 +101,7 @@ class ContactsEntry extends StatelessWidget with Avatar {
                             fit: BoxFit.contain)
                         : Text('No avatar image for this container'),
                     trailing: IconButton(
-                      icon: Icon(Icons.edit),
+                      icon: const Icon(Icons.edit),
                       color: Colors.blue,
                       onPressed: () => _selectAvatar(context),
                     ),
