@@ -5,6 +5,8 @@ import 'Appointments.dart';
 import 'AppointmentsModel.dart';
 import 'package:flutter_book/BaseModel.dart';
 import 'AppointmentsDBWorker.dart';
+import 'package:intl/date_time_patterns.dart';
+import 'package:intl/intl.dart';
 
 class AppointmentsEntry extends StatelessWidget {
   final TextEditingController _titleEditingController = TextEditingController();
@@ -83,7 +85,7 @@ class AppointmentsEntry extends StatelessWidget {
     );
   }
 
-  Row _buildControlButtons(BuildContext context, Model model) {
+  Row _buildControlButtons(BuildContext context, AppointmentsModel model) {
     return Row(
       children: [
         Container(
@@ -153,6 +155,8 @@ class AppointmentsEntry extends StatelessWidget {
                   children: [
                     _buildTitleListTile(),
                     _buildContentListTile(),
+                    _buildDateListTile(context),
+                    _buildTimeTile(context),
                   ],
                 ),
               ),
@@ -176,4 +180,22 @@ Future<void> _selectTime(BuildContext context) async {
         "${picked.hour},${picked.minute}";
     appointmentsModel.setTime(picked.format(context));
   }
+}
+
+_buildTimeTile(BuildContext context) {
+  return ListTile(
+      leading: Icon(Icons.alarm),
+      title: Text("Time"),
+      subtitle: Text(appointmentsModel.time ?? ''),
+      trailing: IconButton(
+          icon: Icon(Icons.edit),
+          color: Colors.blue,
+          onPressed: (() => _selectTime(context))));
+}
+
+toTime(time) {
+  List timeParts = time.split(",");
+  TimeOfDay initialtime =
+      TimeOfDay(hour: int.parse(timeParts[0]), minute: int.parse(timeParts[1]));
+  return initialtime;
 }

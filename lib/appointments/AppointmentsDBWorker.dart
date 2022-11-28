@@ -54,7 +54,7 @@ class _SqfliteAppointmentsDBWorker implements AppointmentsDBWorker {
     Database db = await database;
     int id = await db.rawInsert(
         "INSERT INTO $TBL_NAME ($KEY_TITLE, $KEY_DESCRIPTION, $KEY_DATE, $KEY_TIME) "
-        "VALUES (?, ?, ?)",
+        "VALUES (?, ?, ?,?)",
         [
           appointment.title,
           appointment.description,

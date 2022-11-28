@@ -7,11 +7,12 @@ import 'Appointments.dart';
 import 'AppointmentsModel.dart';
 import 'AppointmentsEntry.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
+import 'package:flutter_calendar_carousel/classes/event_list.dart';
 
 class AppointmentsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    EventList<Event> markedDateMap = EventList<Event>();
+    EventList<Event> markedDateMap = EventList<Event>(events: Map());
     for (Appointment app in appointmentsModel.entityList) {
       DateTime date = toDate(app.date);
       markedDateMap.add(
@@ -36,6 +37,16 @@ class AppointmentsList extends StatelessWidget {
             ),
           ),
         ),
+        FloatingActionButton(
+          child: const Icon(
+            Icons.add,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            appointmentsModel.entityBeingEdited = Appointment();
+            appointmentsModel.setStackIndex(1);
+          },
+        ),
       ]),
     );
   }
@@ -43,7 +54,32 @@ class AppointmentsList extends StatelessWidget {
 
 void _showAppointments(DateTime date, BuildContext context) async {
   showModalBottomSheet(
-      builder: (BuildContext context, Widget child, AppointmentsModel model) {
-    return Column();
-  });
+      context: context,
+      builder: (BuildContext context) {
+        return Column(
+          children: <Widget>[
+            Text(
+              "${date.month}/${date.day}/${date.year}",
+              style: TextStyle(height: 2, fontSize: 20, color: Colors.blue),
+            ),
+            Expanded(
+                child: ListView.builder(
+                    itemCount: appointmentsModel.entityList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      Appointment app = appointmentsModel.entityList[index];
+                      if (app.date !=
+                          "${date.year},${date.month},${date.day}") {
+                        return Container(height: 0);
+                      }
+                      return Container(
+                        child: ListTile(
+                          title: Text("${app.title} (${app.time})"),
+                          subtitle: Text(app.description),
+                          tileColor: Colors.grey,
+                        ),
+                      );
+                    }))
+          ],
+        );
+      });
 }
